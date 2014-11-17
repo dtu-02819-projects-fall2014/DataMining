@@ -1,13 +1,17 @@
 import praw
 import csv
+from profanity import profanity
+    
+
 
 output_file = csv.writer(open("comments.csv", "w",0), dialect='excel')
 output_file.writerow(["comment"])
 
 r = praw.Reddit(user_agent='Sentiment analysis of subreddits by /u/langeniels')
 
-subreddit = r.get_subreddit('funny')
-subreddit_comments = subreddit.get_comments(limit=1)
+subreddit = r.get_subreddit('cringepics')
+#subreddit = r.get_subreddit('askscience')
+subreddit_comments = subreddit.get_comments(limit=500)
 myList = []
 
 for comment in subreddit_comments:
@@ -28,19 +32,22 @@ L = len(myList)
 
 words=0
 i=0
+profcount =0
 score=0
 while i< L:
   redcomment= myList[i]
+  if(profanity.contains_profanity(myList[i])==True):
+  	profcount +=1
+    
   for word in redcomment.split():
      word = word.lower()
      if word in keywords:
        score += dict[word]
-       #print word
        words +=1
 
   i+=1
 
-#print results
+print profcount
 print "The average sentiment value is " + str(score/words)
 
 
