@@ -47,11 +47,6 @@ while i< L:
 
   i+=1
 
-print profcount
+print "Profanity count:" + profcount
 print "The average sentiment value is " + str(score/words)
-
-
-
-#for c in myList:
-#	print c
 
