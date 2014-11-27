@@ -39,10 +39,10 @@ with open('profanity-list-google.txt') as swearword:
 
 #print profanityList    
 
-dict = {}
+wordDict = {}
 for i in range(0,len(wordlist)):
-  dict[wordlist[i][0]] = float(wordlist[i][1])
-keywords = dict.viewkeys()
+  wordDict[wordlist[i][0]] = float(wordlist[i][1])
+keywords = wordDict.viewkeys()
 
 L = len(myList)
 
@@ -72,12 +72,12 @@ while i< L:
     if word in profanityList:
       profcount +=1
     if word in keywords:
-      score += dict[word]
+      score += wordDict[word]
       words +=1
 
   i+=1
 
-#wordcount_swear = dict((x,0) for x in specificSwearWords)
+#wordcount_swear = wordDict((x,0) for x in specificSwearWords)
 #for w in re.findall(r"\w+", myList):
 #    if w in wordcount_swear:
 #        wordcount_swear[w] += 1
@@ -92,10 +92,12 @@ finalList = regex.sub(' ', stringMyList)
 def count_many(needles, haystack):
     count = Counter(haystack.split())
     print {key: count[key] for key in count if key in needles}
-    counted_words = {key: count[key] for key in count if key in needles}
+    counted_words = {key: count for key in count if key in needles} 
     with open(SWEAR_WORDS, 'wb') as sw:
-      sw.write("\n" + str(counted_words))
-      #sw.write("\n".join(str(x) for x in key))
+      for key in count:
+        if key in needles:
+          print count[key]
+          sw.write(str(count[key]) + "\n")
 
 print finalList
 count_many(specificSwearWords, finalList)
