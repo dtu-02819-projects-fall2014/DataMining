@@ -54,7 +54,7 @@ i=0
 profcount =0
 score=0
 
-specificSwearWords = ["gay","god","fuck","homo"]
+specificSwearWords = ["allah","god","fuck","homo","gay"]
 
 
 wordfreq = 0
@@ -103,7 +103,8 @@ def count_many(needles, haystack):
     X = np.arange(len(counted_words))
     pl.bar(X, counted_words.values(), align='center', width=0.5)
     pl.xticks(X, counted_words.keys())
-    ymax = max(counted_words.values()) + 1
+    #ymax = max(counted_words.values()) + 1
+    ymax = 700
     pl.ylim(0, ymax)
     pl.show()
     
