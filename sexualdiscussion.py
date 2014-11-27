@@ -9,7 +9,7 @@ r = praw.Reddit(user_agent='Sentiment analysis of subreddits by /u/langeniels')
 
 subreddit = r.get_subreddit('cringepics')
 #subreddit = r.get_subreddit('askscience')
-subreddit_comments = subreddit.get_comments(limit=500)
+subreddit_comments = subreddit.get_comments(limit=2000)
 myList = []
 
 for comment in subreddit_comments:
@@ -41,24 +41,33 @@ i=0
 profcount =0
 score=0
 
+specificSwearWords = ['the','in','gay','homo','homosexual','queer']
+
+
+wordfreq = 0
+
+
 while i< L:
   redcomment= myList[i]
   
   redcomment = redcomment.encode('utf-8')
   print redcomment
 
+
+
   for word in redcomment.split():
-     word = word.lower()
-
-     if word in profanityList:
+     
+    if word in specificSwearWords:
+      wordfreq +=1
+    if word in profanityList:
       profcount +=1
-
-     if word in keywords:
-       score += dict[word]
-       words +=1
+    if word in keywords:
+      score += dict[word]
+      words +=1
 
   i+=1
 
+print "wordsadd: " + str(wordfreq)
 print "Total words: " + str(words)
 print "Profanity count: " + str(profcount)
 print "The average sentiment value is " + str(score/words)
