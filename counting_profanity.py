@@ -50,9 +50,9 @@ while i<L:
     profcount +=1
 
 #print profanityList  
-print profanity_count  
-print profcount
-
+#print profanity_count  
+#print profcount
+print myList
 
 
 
