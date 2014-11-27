@@ -6,103 +6,56 @@ import string
 import re
 import os
     
+# Define the desired name and destination for your .csv file that will contain the counted swear words
 SWEAR_WORDS = "counted_swear_words.csv"
-# make sure the "swear words" file exists
+
+# Define the words you want to search for in a specific subreddit
+specificSwearWords = ["the","in","fuck","homo","homosexual","queer"]
+
+# Make sure the "swear words" file exists. If not, we will make it here.
 if not os.path.isfile(SWEAR_WORDS):
   with open(SWEAR_WORDS, "w") as out_file:
     out_file.write("")
 
-output_file = csv.writer(open("comments.csv", "w",0), dialect='excel')
-output_file.writerow(["comment"])
-
 r = praw.Reddit(user_agent='Sentiment analysis of subreddits by /u/langeniels')
 
 subreddit = r.get_subreddit('cringepics')
-#subreddit = r.get_subreddit('askscience')
 subreddit_comments = subreddit.get_comments(limit=2000)
-myList = []
 
+# Will append the subreddit comments 'myList'
+myList = []
 for comment in subreddit_comments:
 	myList.append(comment.body)
-	output_file.writerow([comment.body.encode('utf-8')])
 
-wordlist = []
-with open('word_list.txt') as f:
-  for line in f:
-    wordlist.append(line.split('\t'))
-
-profanityList = []
-with open('profanity-list-google.txt') as swearword:
-  for someword in swearword:
-    someword = someword.strip()
-    profanityList.append(someword)
-
-#print profanityList    
-
-wordDict = {}
-for i in range(0,len(wordlist)):
-  wordDict[wordlist[i][0]] = float(wordlist[i][1])
-keywords = wordDict.viewkeys()
-
-L = len(myList)
-
-words=0
-i=0
-profcount =0
-score=0
-
-specificSwearWords = ["the","in","fuck","homo","homosexual","queer"]
-
-
-wordfreq = 0
-
-
-while i< L:
-  redcomment= myList[i]
-  
-  redcomment = redcomment.encode('utf-8')
-  #print redcomment
-
-
-
-  for word in redcomment.split():
-     
-    if word in specificSwearWords:
-      wordfreq +=1
-    if word in profanityList:
-      profcount +=1
-    if word in keywords:
-      score += wordDict[word]
-      words +=1
-
-  i+=1
-
-#wordcount_swear = wordDict((x,0) for x in specificSwearWords)
-#for w in re.findall(r"\w+", myList):
-#    if w in wordcount_swear:
-#        wordcount_swear[w] += 1
-
-#Converting our comments list to a string so we can count occurences
+#Converting our comments list to a string so we can count occurences. We also convert the string to lowercase so we don't have to search for both "fuck" and "Fuck".
+#The reqular expression is replacing all punctuations in the comments string with spaces we can count swear words that ends or starts with a punctuation.
 
 stringMyList = ''.join(myList).encode('utf-8').lower()
-#lowerList = stringMyList.lower()
 regex = re.compile('[%s]' % re.escape(string.punctuation))
 finalList = regex.sub(' ', stringMyList)
+del myList, stringMyList
+
+prof_wordcount = dict((x,0) for x in specificSwearWords)
+for w in re.findall(r"\w+", finalList):
+    if w in prof_wordcount:
+        prof_wordcount[w] += 1
+print "WORDCOUNT: " + str(prof_wordcount)
+
+#Writes a .csv file with the profanity keys in the start of the rows and the profanity occurences to the right
+writer = csv.writer(open('dict.csv', 'wb'))
+for key, value in prof_wordcount.items():
+   writer.writerow([key, value])
+
+#Writes a .csv file with the profanity keys as headers and the amount of occurences beneath
+with open(SWEAR_WORDS, 'wb') as sw:
+    w = csv.DictWriter(sw, prof_wordcount.keys())
+    w.writeheader()
+    w.writerow(prof_wordcount)
 
 def count_many(needles, haystack):
     count = Counter(haystack.split())
     print {key: count[key] for key in count if key in needles}
-    counted_words = {key: count for key in count if key in needles} 
-    with open(SWEAR_WORDS, 'wb') as sw:
-      for key in count:
-        if key in needles:
-          print count[key]
-          sw.write(str(count[key]) + "\n")
 
-print finalList
 count_many(specificSwearWords, finalList)
-#print "wordsadd: " + str(wordfreq)
-#print "Total words: " + str(words)
-#print "Profanity count: " + str(profcount)
-#print "The average sentiment value is " + str(score/words)
+
 
