@@ -2,8 +2,6 @@ import praw
 import csv
 from profanity import profanity
     
-
-
 output_file = csv.writer(open("comments.csv", "w",0), dialect='excel')
 output_file.writerow(["comment"])
 
@@ -11,7 +9,7 @@ r = praw.Reddit(user_agent='Sentiment analysis of subreddits by /u/langeniels')
 
 subreddit = r.get_subreddit('cringepics')
 #subreddit = r.get_subreddit('askscience')
-subreddit_comments = subreddit.get_comments(limit=500)
+subreddit_comments = subreddit.get_comments(limit=50)
 myList = []
 
 for comment in subreddit_comments:
@@ -22,6 +20,14 @@ wordlist = []
 with open('word_list.txt') as f:
   for line in f:
     wordlist.append(line.split('\t'))
+
+profanityList = []
+with open('profanity-list.txt') as swearword:
+  for someword in swearword:
+    someword = someword.strip()
+    profanityList.append(someword)
+
+#print profanityList    
 
 dict = {}
 for i in range(0,len(wordlist)):
@@ -34,19 +40,19 @@ words=0
 i=0
 profcount =0
 score=0
-while i< L:
-  redcomment= myList[i]
-  if(profanity.contains_profanity(myList[i])==True):
-  	profcount +=1
-    
-  for word in redcomment.split():
-     word = word.lower()
-     if word in keywords:
-       score += dict[word]
-       words +=1
+#while i< L:
+#  redcomment= myList[i]
+#  if(profanity.contains_profanity(myList[i])==True):
+#  	profcount +=1
+#   
+#  for word in redcomment.split():
+#     word = word.lower()
+#     if word in keywords:
+#       score += dict[word]
+#       words +=1
 
-  i+=1
+#  i+=1
 
-print "Profanity count:" + profcount
-print "The average sentiment value is " + str(score/words)
+#print "Profanity count:" + profcount
+#print "The average sentiment value is " + str(score/words)
 
