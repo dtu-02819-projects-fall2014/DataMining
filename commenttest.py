@@ -9,7 +9,7 @@ r = praw.Reddit(user_agent='Sentiment analysis of subreddits by /u/langeniels')
 
 subreddit = r.get_subreddit('cringepics')
 #subreddit = r.get_subreddit('askscience')
-subreddit_comments = subreddit.get_comments(limit=50)
+subreddit_comments = subreddit.get_comments(limit=500)
 myList = []
 
 for comment in subreddit_comments:
@@ -22,12 +22,12 @@ with open('word_list.txt') as f:
     wordlist.append(line.split('\t'))
 
 profanityList = []
-with open('profanity-list.txt') as swearword:
+with open('profanity-list-google.txt') as swearword:
   for someword in swearword:
     someword = someword.strip()
     profanityList.append(someword)
 
-#print profanityList    
+print profanityList    
 
 dict = {}
 for i in range(0,len(wordlist)):
@@ -40,19 +40,26 @@ words=0
 i=0
 profcount =0
 score=0
-#while i< L:
-#  redcomment= myList[i]
-#  if(profanity.contains_profanity(myList[i])==True):
-#  	profcount +=1
-#   
-#  for word in redcomment.split():
-#     word = word.lower()
-#     if word in keywords:
-#       score += dict[word]
-#       words +=1
 
-#  i+=1
+while i< L:
+  redcomment= myList[i]
+  
+  redcomment = redcomment.encode('utf-8')
+  print redcomment
 
-#print "Profanity count:" + profcount
-#print "The average sentiment value is " + str(score/words)
+  for word in redcomment.split():
+     word = word.lower()
+
+     if word in profanityList:
+      profcount +=1
+
+     if word in keywords:
+       score += dict[word]
+       words +=1
+
+  i+=1
+
+print "Total words: " + str(words)
+print "Profanity count: " + str(profcount)
+print "The average sentiment value is " + str(score/words)
 
