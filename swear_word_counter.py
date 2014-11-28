@@ -18,7 +18,7 @@ r = praw.Reddit(user_agent='Sentiment analysis of subreddits by /u/langeniels')
 # The function defines the words you want to search for,
 # the subreddit and the amount of comments.
 def swear_word_count(word1, word2, word3, word4, word5, word6,
-                     subreddit, comment_amount):
+                     subreddit='all', comment_amount=200):
 
     chosen_subreddit = r.get_subreddit(subreddit)
     amount = chosen_subreddit.get_comments(limit=comment_amount)
