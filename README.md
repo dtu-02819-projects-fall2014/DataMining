@@ -16,7 +16,7 @@ This program has several functions you can use to interact with Reddit.org. It a
 By default, the program takes the 200 recent comments from the subreddit ‘all’. You can change the subreddit by using the ‘subreddit’ parameter and you can change the amount of comments the program will fetch with the ‘comment_amount’ parameter.
 
 		swear_word_count(‘word1’, ‘word2’, ‘word3’, ‘word4’, ‘word5’, ‘word6’,
-subreddit=‘funny’, comment_amount=100)
+		subreddit=‘funny’, comment_amount=100)
 
 This script will output a .csv file called ‘counted_swear_words.csv’ containing all the specified words and the amount of occurences. This file can then be used to graph your preferred plot with the datafile_plotting.py file.
 
