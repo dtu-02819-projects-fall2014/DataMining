@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 df = pd.read_csv('counted_swear_words.csv')
 
-df.plot(kind='hist', alpha=0.5)
+df.plot(kind='barh', alpha=0.5, stacked=True)
 plt.show()
 
 print df
