@@ -22,7 +22,7 @@ r = praw.Reddit(user_agent='Sentiment analysis of subreddits by /u/langeniels')
 #subreddit = r.get_subreddit('Christianity')
 subreddit = r.get_subreddit('islam')
 #subreddit = r.get_subreddit('askscience')
-subreddit_comments = subreddit.get_comments(limit=2000)
+subreddit_comments = subreddit.get_comments(limit=20)
 myList = []
 
 for comment in subreddit_comments:
@@ -47,10 +47,10 @@ for i in range(0,len(wordlist)):
   dict[wordlist[i][0]] = float(wordlist[i][1])
 keywords = dict.viewkeys()
 
-L = len(myList)
+#L = len(myList)
 
 words=0
-i=0
+#i=0
 profcount =0
 score=0
 
@@ -59,9 +59,9 @@ specificSwearWords = ["allah","god","fuck","homo","gay"]
 
 wordfreq = 0
 
-
-while i< L:
-  redcomment= myList[i]
+for redcomment in myList:
+#while i< L:
+#  redcomment= myList[i]
   
   redcomment = redcomment.encode('utf-8')
   #print redcomment

@@ -20,7 +20,7 @@ if not os.path.isfile(SWEAR_WORDS):
 r = praw.Reddit(user_agent='Sentiment analysis of subreddits by /u/langeniels')
 
 subreddit = r.get_subreddit('cringepics')
-subreddit_comments = subreddit.get_comments(limit=2000)
+subreddit_comments = subreddit.get_comments(limit=20)
 
 # Will append the subreddit comments 'myList'
 myList = []
