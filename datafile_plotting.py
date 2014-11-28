@@ -1,11 +1,14 @@
 import pandas as pd
-from pandas import DataFrame
 import matplotlib.pyplot as plt
 
 
-df = pd.read_csv('counted_swear_words.csv')
+def plotter(plot_kind, file):
+    df = pd.read_csv(file)
 
-df.plot(kind='barh', alpha=0.5, stacked=True)
-plt.show()
+    df.plot(kind=plot_kind, alpha=0.5, stacked=True)
+    plt.show()
 
-print df
+    print df
+
+# Example usage:
+# plotter('barh', 'counted_swear_words.csv')
