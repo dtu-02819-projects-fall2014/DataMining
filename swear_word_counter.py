@@ -40,30 +40,30 @@ def swear_word_count(word1, word2, word3, word4, word5, word6,
     print "Profanity word count: " + str(prof_wordcount)
     prof_wordcount.keys().insert(0, subreddit)
 
-    # Make sure the "swear words" file exists. If not, we will make it here.
+    # Make sure the "swear words" file exists. 
+    # If not, we will make it here and assign the necessary headers.
     if not os.path.isfile(SWEAR_WORDS):
         with open(SWEAR_WORDS, "wb") as out_file:
             w = csv.DictWriter(out_file, fieldnames = prof_wordcount.keys())
-            out_file.write('subreddit' + ',')
+            out_file.write('Subreddit' + ',')
             w.writeheader()
 
     # Outputs a .csv file with the profanity words as headers
-    if os.path.isfile(SWEAR_WORDS):
-        with open(SWEAR_WORDS, 'ab') as sw, open (SWEAR_WORDS, 'rt') as f:
-            reader = csv.reader(f, delimiter=',')
-            w = csv.DictWriter(sw, fieldnames = prof_wordcount.keys())
-            for row in reader:
-                if subreddit not in row[0]:
-                    inCsvBool = False
-                else:
-                    inCsvBool = True
-            if inCsvBool is False:
-            	sw.write(subreddit + ",")
-            	w.writerow(prof_wordcount)
-            	print "Outputted " + "'" + SWEAR_WORDS + "'" + " to the folder."
+    with open(SWEAR_WORDS, 'ab') as sw, open (SWEAR_WORDS, 'rt') as f:
+        reader = csv.reader(f, delimiter=',')
+        w = csv.DictWriter(sw, fieldnames = prof_wordcount.keys())
+        for row in reader:
+            if subreddit not in row[0]:
+                inCsvBool = False
             else:
-            	print "You have already fetched results from that subreddit." 
-            	print "Please save the current file and make a new."
+                inCsvBool = True
+        if inCsvBool is False:
+        	sw.write(subreddit + ",")
+        	w.writerow(prof_wordcount)
+        	print "Outputted " + "'" + SWEAR_WORDS + "'" + " to the folder."
+        else:
+        	print "You have already fetched results from that subreddit." 
+        	print "Please save the current file and make a new."
 
 # Example usage:
 swear_word_count('fuck', 'in', 'shit', 'the', 'bitch', 'gay',
