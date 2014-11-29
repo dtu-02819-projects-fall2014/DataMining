@@ -51,7 +51,9 @@ for redcomment in myList:
             words += 1
 
     i += 1
-
+    average_sentiment = str(score/words)
+    print average_sentiment
+    
 print "Total of specified swear words: " + str(wordFreq)
 print "Total words: " + str(words)
 print "Profanity count: " + str(profcount)

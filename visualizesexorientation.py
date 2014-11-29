@@ -49,29 +49,16 @@ for i in range(0,len(wordlist)):
   dict[wordlist[i][0]] = float(wordlist[i][1])
 keywords = dict.viewkeys()
 
-#L = len(myList)
-
 words=0
-#i=0
 profcount =0
 score=0
-
+wordfreq = 0
 specificSwearWords = ["allah","god","fuck","homo","gay"]
 
-
-wordfreq = 0
-
 for redcomment in myList:
-#while i< L:
-#  redcomment= myList[i]
-  
   redcomment = redcomment.encode('utf-8')
-  #print redcomment
-
-
 
   for word in redcomment.split():
-     
     if word in specificSwearWords:
       wordfreq +=1
     if word in profanityList:
@@ -79,13 +66,7 @@ for redcomment in myList:
     if word in keywords:
       score += dict[word]
       words +=1
-
   i+=1
-
-#wordcount_swear = dict((x,0) for x in specificSwearWords)
-#for w in re.findall(r"\w+", myList):
-#    if w in wordcount_swear:
-#        wordcount_swear[w] += 1
 
 #Converting our comments list to a string so we can count occurences
 
