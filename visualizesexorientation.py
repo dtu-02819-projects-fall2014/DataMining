@@ -7,6 +7,8 @@ import re
 import os
 import pylab as pl
 import numpy as np
+import pandas as pd
+from pandas import DataFrame
     
 SWEAR_WORDS = "counted_swear_words.csv"
 # make sure the "swear words" file exists
@@ -22,7 +24,7 @@ r = praw.Reddit(user_agent='Sentiment analysis of subreddits by /u/langeniels')
 #subreddit = r.get_subreddit('Christianity')
 subreddit = r.get_subreddit('islam')
 #subreddit = r.get_subreddit('askscience')
-subreddit_comments = subreddit.get_comments(limit=20)
+subreddit_comments = subreddit.get_comments(limit=200)
 myList = []
 
 for comment in subreddit_comments:
@@ -103,11 +105,10 @@ def count_many(needles, haystack):
     X = np.arange(len(counted_words))
     pl.bar(X, counted_words.values(), align='center', width=0.5)
     pl.xticks(X, counted_words.keys())
-    #ymax = max(counted_words.values()) + 1
+    ymax = max(counted_words.values()) + 1
     ymax = 700
     pl.ylim(0, ymax)
     pl.show()
-    
 
 
 #print finalList
