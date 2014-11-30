@@ -44,8 +44,6 @@ def grab(subreddit='all', comment_amount=10000):
             	#chosen_subreddit = r.get_subreddit(subreddit)
         		#amount = chosen_subreddit.get_comments(limit=comment_amount)
         		keep_on = False
-        if keep_on is False:
-           grab(subreddit=subreddit, comment_amount=5000)
 
         if time.time() > timeout:
            print 'Done'
