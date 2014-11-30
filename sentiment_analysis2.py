@@ -72,4 +72,4 @@ def semantic_reddit(subreddit='all', comment_amount=200):
             print "You have already fetched this subreddit."
             print "Try a different."
 
-semantic_reddit('videos', 200)
+semantic_reddit('funny', 200)

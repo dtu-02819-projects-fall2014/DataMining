@@ -6,8 +6,8 @@ import csv
 import math
 
 
-def plotter(file):
-    df = pd.read_csv(file, encoding="utf-8",index_col='Subreddit')
+def plotter(plot_file):
+    df = pd.read_csv(plot_file, encoding="utf-8",index_col='Subreddit')
     df.plot(kind='bar',stacked=True)#,x=df.values, y=df.columns)
     plt.xticks(rotation='0')
     plt.show()
@@ -25,7 +25,7 @@ def plotter(file):
 
 
 # Example usage:
-plotter('counted_swear_words.csv')
+plotter('reddit_semantic.csv')
 
 
 

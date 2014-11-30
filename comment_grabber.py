@@ -38,8 +38,6 @@ def grab(subreddit='all', comment_amount=10000):
     # Appends the subreddit comments 'myList'
     myList = []
     already_done = open('comment_ids')
-    #print 'before'
-    #print already_done
     while keep_on is True:
         for comment in submissions:
             if comment.id not in already_done:
