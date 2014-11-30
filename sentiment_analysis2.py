@@ -66,10 +66,10 @@ def semantic_reddit(subreddit='all', comment_amount=200):
                 subredInCsv = False
             else:
                 subredInCsv = True
-            if subredInCsv is False:
-                writer.writerow([subreddit, average_sentiment])
-            else:
-                print "You have already fetched this subreddit."
-                print "Try a different."
+        if subredInCsv is False:
+            writer.writerow([subreddit, average_sentiment])
+        else:
+            print "You have already fetched this subreddit."
+            print "Try a different."
 
 semantic_reddit('videos', 200)
