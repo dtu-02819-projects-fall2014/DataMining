@@ -20,8 +20,8 @@ def plotter(file):
     plt.show()
     area =[]
     #area.append(math.sqrt(df.values))
-    plt.scatter(x=df['fuck'],y=df['shit'])
-    plt.show()
+    #plt.scatter(x=df['fuck'],y=df['shit'])
+    #plt.show()
 
 
 # Example usage:

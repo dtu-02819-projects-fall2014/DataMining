@@ -55,7 +55,7 @@ def swear_word_count(word1, word2, word3, word4, word5, word6,
             someword = someword.strip()
             profanityList.append(someword)
 
-    '''wordDict = {}
+    wordDict = {}
                 for i in range(0, len(wordlist)):
                     wordDict[wordlist[i][0]] = float(wordlist[i][1])
                 keywords = wordDict.viewkeys()
@@ -137,7 +137,7 @@ def swear_word_count(word1, word2, word3, word4, word5, word6,
                         print "Outputted " + "'" + SWEAR_WORDS + "'" + " to the folder."
                     else:
                         print "You have already fetched results from that subreddit." 
-                        print "Please save the current file and make a new."'''
+                        print "Please save the current file and make a new."
 
 # Example usage:
 swear_word_count('homo', 'faggot', 'gay', 'fag', 'queer', 'homosexual',

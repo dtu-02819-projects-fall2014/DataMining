@@ -5,7 +5,7 @@ import re
 import os
 import time
 
-timeout = time.time() + 60*1440 #24 hours 60*180
+timeout = time.time() + 60*1440 #24 hours
 r = praw.Reddit(user_agent='Sentiment analysis of subreddits by /u/langeniels')
 if not os.path.isfile("comments.csv"):
     with open("comments.csv", 'wb') as open_file:
