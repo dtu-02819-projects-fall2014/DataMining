@@ -6,9 +6,13 @@ import csv
 import math
 
 
-def plotter(plot_file):
+def plotter(plot_file, chosen_words):
     df = pd.read_csv(plot_file, encoding="utf-8",index_col='Subreddit')
-    df.plot(kind='bar',stacked=True)#,x=df.values, y=df.columns)
+    df[chosen_words].plot(kind='bar',stacked=True)#,x=df.values, y=df.columns)
+    plt.xticks(rotation='0')
+    plt.show()
+
+    df['Sentiment Value'].plot(kind='bar')
     plt.xticks(rotation='0')
     plt.show()
 
