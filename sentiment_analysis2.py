@@ -30,7 +30,7 @@ def write_comments(filename, comments):
         writer = csv.writer(output_file)
         writer.writerow(comments)
 
-def sentiment_reddit(comment_amount=200, word1='gay', word2='homo', word3='homosexual', word4='faggot', word5='fag', word6='queer'):
+def sentiment_reddit(comment_amount=200, word1='gay', word2='homo', word3='love', word4='sex', word5='prayer', word6='meditation'):
     words = []
     new_subreddit = raw_input("Please enter new subreddit (videos, nfl, nhl, dogs, christianity, etc.): ")
     subreddit = new_subreddit
@@ -74,8 +74,8 @@ def sentiment_reddit(comment_amount=200, word1='gay', word2='homo', word3='homos
             profanity_list.append(someword)
 
     # Run through the commentlist and count profanity.
-    word_count = 0
-    profanity_count = 0
+    word_count = 0.0
+    profanity_count = 0.0
 
     for redcomment in subreddit_comments_list:
         redcomment = redcomment.encode('utf-8')
@@ -84,7 +84,8 @@ def sentiment_reddit(comment_amount=200, word1='gay', word2='homo', word3='homos
             if word in profanity_list:
                 profanity_count += 1
 
-    prof_score = float(profanity_count)/word_count
+    prof_score = (float(profanity_count)/word_count)*100
+    prof_score_list = [prof_score]
 
     # Use AFINN-111.txt and make a dict with words and their coresponding sentiment values. 
     afinn = dict(map(lambda (w, s): (w, int(s)), [ 
@@ -118,10 +119,12 @@ def sentiment_reddit(comment_amount=200, word1='gay', word2='homo', word3='homos
     for w in re.findall(r"\w+", comments):
         if w in prof_wordcount:
             prof_wordcount[w] += 1
-    print "Profanity word count: " + str(prof_wordcount)
+    # print "Profanity word count: " + str(prof_wordcount)
+
     prof_wordcount.keys().insert(0, subreddit)
 
-    prof_score_list = [prof_score]
+    for key,value in prof_wordcount.items():
+        prof_wordcount[key] = (float(value)/word_count)*100
 
     # Make sure the "SENTIMENT_RED" file exists.
     if not os.path.isfile(SENTIMENT_RED):
