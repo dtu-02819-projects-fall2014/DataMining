@@ -32,12 +32,17 @@ def write_comments(filename, comments):
         writer = csv.writer(output_file)
         writer.writerow(comments)
 
+<<<<<<< HEAD
 
 def sentiment_reddit(comment_amount=200, word1 = 'gay', word2 = 'homo', word3 ='homosexual', word4='faggot', word5 = 'fag', word6 = 'queer'):
     words = []
+=======
+def sentiment_reddit(comment_amount=200, word1 = 'in', word2 = 'the', word3 ='ass', word4='hey', word5 = 'lol', word6 = 'nice'):
+>>>>>>> FETCH_HEAD
     new_subreddit = raw_input("Please enter new subreddit (videos, nfl, nhl, dogs, christianity, etc.): ")
     subreddit = new_subreddit
     if subreddit == 'exit':
+        
         sys.exit('You have exited')
     
     '''
@@ -53,13 +58,6 @@ def sentiment_reddit(comment_amount=200, word1 = 'gay', word2 = 'homo', word3 ='
             subreddit = new_subreddit
             continue
         break
-    #if not words:
-    #    word1 = raw_input("Now input 6 words you want to search for in the subreddits: ")
-    #    word2 = raw_input('Word number 2: ')
-    #    word3 = raw_input('Word number 3: ')
-    #   word4 = raw_input('Word number 4: ')
-    #    word5 = raw_input('Word number 5: ')
-    #    word6 = raw_input('Word number 6: ')
     
     '''
     Run through all comments and store them in a list.
@@ -175,8 +173,9 @@ def sentiment_reddit(comment_amount=200, word1 = 'gay', word2 = 'homo', word3 ='
         else:
             print "You have already fetched this subreddit."
             print "Try a different."
+    return words
 
 for x in range(0, 3):
     sentiment_reddit(comment_amount=200)#, word1 = word1, word2 = word2, word3 =word3, word4=word4, word5 = word5, word6 = word6)
 
-plotter(SENTIMENT_RED)
+plotter(SENTIMENT_RED, chosen_words = sentiment_reddit())
