@@ -12,20 +12,20 @@ def plotter(plot_file):
     plt.xticks(rotation='0')
     plt.show()
 
-    plt.boxplot(x=df.values)
-    plt.xticks([1, 2, 3, 4, 5, 6], df.columns)
-    plt.show()
+    #plt.boxplot(x=df.values)
+    #plt.xticks([1, 2, 3, 4, 5, 6], df.columns)
+    #plt.show()
 
-    df.boxplot()
-    plt.show()
-    area =[]
+    #df.boxplot()
+    #plt.show()
+    #area =[]
     #area.append(math.sqrt(df.values))
     #plt.scatter(x=df['fuck'],y=df['shit'])
     #plt.show()
 
 
 # Example usage:
-plotter('reddit_semantic.csv')
+
 
 
 

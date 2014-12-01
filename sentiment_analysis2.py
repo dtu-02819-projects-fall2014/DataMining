@@ -6,6 +6,8 @@ import re
 import sys
 import time
 from datetime import date
+from datafile_plotting import plotter
+
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -15,10 +17,13 @@ AFINN_FILE = 'AFINN-111.txt'
 r = praw.Reddit(user_agent='Sentiment analysis of subreddits by /u/langeniels')
 subredInCsv = True
 
+if os.path.isfile(SENTIMENT_RED):
+    os.remove(SENTIMENT_RED)
+
 # make sure the "semantics" file exists
 if not os.path.isfile(SENTIMENT_RED):
     with open(SENTIMENT_RED, "wb") as out_file:
-        fieldnames = ['Subreddit', 'Semantic Value']
+        fieldnames = ['Subreddit', 'Sentiment Value']
         writer = csv.DictWriter(out_file, fieldnames=fieldnames)
         writer.writeheader()
 
@@ -29,7 +34,9 @@ def write_comments(filename, comments):
         writer = csv.writer(output_file)
         writer.writerow(comments)
 
-def sentiment_reddit(subreddit, comment_amount=200):
+def sentiment_reddit(comment_amount=200):
+    new_subreddit = raw_input("Please enter new subreddit (videos, nfl, nhl, dogs, christianity, etc.): ")
+    subreddit = new_subreddit
     while True:
         try:
             subreddit_name = r.get_subreddit(subreddit,fetch=True)
@@ -97,4 +104,7 @@ def sentiment_reddit(subreddit, comment_amount=200):
             print "You have already fetched this subreddit."
             print "Try a different."
 
-sentiment_reddit(subreddit='asjhjhasjhasjh', comment_amount=200)
+for x in range(0, 3):
+    sentiment_reddit(comment_amount=200)
+
+plotter(SENTIMENT_RED)
