@@ -10,14 +10,20 @@ def plotter(plot_file, chosen_words):
     df = pd.read_csv(plot_file, encoding="utf-8",index_col='Subreddit')
     df[chosen_words].plot(kind='bar',stacked=True)#,x=df.values, y=df.columns)
     plt.xticks(rotation='0')
+    plt.title('Word Frequency')
+    plt.ylabel('Percentage')
     plt.show()
 
     df['Sentiment Value'].plot(kind='bar')
     plt.xticks(rotation='0')
+    plt.title('Sentiment Score')
+    plt.ylabel('Word sentiment weight: N')
     plt.show()
 
     df['Profanity Score'].plot(kind='bar')
     plt.xticks(rotation='0')
+    plt.title('Profane Words Frequency')
+    plt.ylabel('Percentage')
     plt.show()
 
     #plt.boxplot(x=df.values)

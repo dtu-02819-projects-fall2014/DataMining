@@ -119,10 +119,10 @@ def sentiment_reddit(comment_amount=200, word1='gay', word2='homo', word3='love'
     for w in re.findall(r"\w+", comments):
         if w in prof_wordcount:
             prof_wordcount[w] += 1
-    # print "Profanity word count: " + str(prof_wordcount)
 
     prof_wordcount.keys().insert(0, subreddit)
 
+    # Change values in dict to percentage: (word frequency/total nr of words)*100
     for key,value in prof_wordcount.items():
         prof_wordcount[key] = (float(value)/word_count)*100
 
