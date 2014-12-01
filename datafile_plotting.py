@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import csv
 import math
+import Image
 
 
 def plotter(plot_file, chosen_words):
@@ -12,6 +13,8 @@ def plotter(plot_file, chosen_words):
     plt.xticks(rotation='0')
     plt.title('Word Frequency')
     plt.ylabel('Percentage')
+    plt.savefig('testplot.png')
+    Image.open('testplot.png').save('testplot.jpg','JPEG')
     plt.show()
 
     df['Sentiment Value'].plot(kind='bar')
