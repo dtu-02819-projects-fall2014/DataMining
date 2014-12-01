@@ -37,16 +37,19 @@ def grab(subreddit='all', comment_amount=10000):
 
     # Appends the subreddit comments 'myList'
     myList = []
-    already_done = open('comment_ids')
+    #already_done = open('comment_ids')
+    already_done = set()
     while keep_on is True:
         for comment in submissions:
             if comment.id not in already_done:
                 myList.append(comment.body)
                 write_comments([comment.body.encode('utf-8')])
                 already_done.add(comment.id)
-                write_ids(list(already_done))
+                #write_ids(list(already_done))
             else:
-        		keep_on = False
+                del submissions
+                keep_on = False
+                grab(subreddit,comment_amount)
         if time.time() > timeout:
            print 'Done'
            break
