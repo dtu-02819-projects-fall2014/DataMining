@@ -4,34 +4,49 @@ import os
 import math
 import re
 import sys
+import time
+from datetime import date
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-SEMANTIC_RED = "reddit_semantic.csv"
+SENTIMENT_RED = "reddit_sentiment.csv"
 AFINN_FILE = 'AFINN-111.txt'
 
 r = praw.Reddit(user_agent='Sentiment analysis of subreddits by /u/langeniels')
 subredInCsv = True
 
 # make sure the "semantics" file exists
-if not os.path.isfile(SEMANTIC_RED):
-    with open(SEMANTIC_RED, "wb") as out_file:
+if not os.path.isfile(SENTIMENT_RED):
+    with open(SENTIMENT_RED, "wb") as out_file:
         fieldnames = ['Subreddit', 'Semantic Value']
         writer = csv.DictWriter(out_file, fieldnames=fieldnames)
         writer.writeheader()
 
-output_file = csv.writer(open("comments.csv", "w", 0), dialect='excel')
-output_file.writerow(["comment"])
+def write_comments(filename, comments):
+    now = date.today()
+    dateToday = "-" + str(now.month) + "-" + str(now.day) + "-" + str(now.year)
+    with open(filename + dateToday + '.csv', 'ab') as output_file:
+        writer = csv.writer(output_file)
+        writer.writerow(comments)
 
-
-def semantic_reddit(subreddit='all', comment_amount=200):
-
-    subreddit_name = r.get_subreddit(subreddit)
-    subreddit_comments = subreddit_name.get_comments(limit=comment_amount)
+def sentiment_reddit(subreddit, comment_amount=200):
+    while True:
+        try:
+            subreddit_name = r.get_subreddit(subreddit,fetch=True)
+            subreddit_comments = subreddit_name.get_comments(limit=comment_amount)
+        except:
+            print "That is not a valid subreddit. Please try again"
+            new_subreddit = raw_input("Please enter new subreddit ")
+            subreddit = new_subreddit
+            continue
+        break
+    
     
     subreddit_comments_list = []
     for comment in subreddit_comments:
         subreddit_comments_list.append(comment.body)
+        write_comments(subreddit, [comment.body])
+    
 
     profanity_list = []
     with open('profanity-list-google.txt') as swearword:
@@ -68,7 +83,7 @@ def semantic_reddit(subreddit='all', comment_amount=200):
     print "total words: " + str(word_count)
     print "Afinn sentiment avg: " + str(sentiment_score)
 
-    with open(SEMANTIC_RED, 'ab') as sm, open(SEMANTIC_RED, 'rt') as f:
+    with open(SENTIMENT_RED, 'ab') as sm, open(SENTIMENT_RED, 'rt') as f:
         reader = csv.reader(f, delimiter=',')
         writer = csv.writer(sm)
         for row in reader:
@@ -82,4 +97,4 @@ def semantic_reddit(subreddit='all', comment_amount=200):
             print "You have already fetched this subreddit."
             print "Try a different."
 
-semantic_reddit('christianity', 200)
+sentiment_reddit(subreddit='asjhjhasjhasjh', comment_amount=200)
