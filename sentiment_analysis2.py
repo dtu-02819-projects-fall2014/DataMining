@@ -7,6 +7,7 @@ import sys
 import time
 from datetime import date
 from datafile_plotting import plotter
+import string
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -20,13 +21,6 @@ subredInCsv = True
 if os.path.isfile(SENTIMENT_RED):
     os.remove(SENTIMENT_RED)
 
-# make sure the "semantics" file exists
-if not os.path.isfile(SENTIMENT_RED):
-    with open(SENTIMENT_RED, "wb") as out_file:
-        fieldnames = ['Subreddit', 'Sentiment Value']
-        writer = csv.DictWriter(out_file, fieldnames=fieldnames)
-        writer.writeheader()
-
 def write_comments(filename, comments):
     now = date.today()
     dateToday = "-" + str(now.month) + "-" + str(now.day) + "-" + str(now.year)
@@ -34,11 +28,13 @@ def write_comments(filename, comments):
         writer = csv.writer(output_file)
         writer.writerow(comments)
 
-
-
-def sentiment_reddit(comment_amount=200):
+def sentiment_reddit(comment_amount=200, word1 = 'in', word2 = 'the', word3 ='ass', word4='hey', word5 = 'lol', word6 = 'nice'):
+    words = []
     new_subreddit = raw_input("Please enter new subreddit (videos, nfl, nhl, dogs, christianity, etc.): ")
     subreddit = new_subreddit
+    if subreddit == 'exit':
+        sys.exit('You have exited')
+
     while True:
         try:
             subreddit_name = r.get_subreddit(subreddit,fetch=True)
@@ -49,7 +45,13 @@ def sentiment_reddit(comment_amount=200):
             subreddit = new_subreddit
             continue
         break
-    
+    #if not words:
+    #    word1 = raw_input("Now input 6 words you want to search for in the subreddits: ")
+    #    word2 = raw_input('Word number 2: ')
+    #    word3 = raw_input('Word number 3: ')
+    #   word4 = raw_input('Word number 4: ')
+    #    word5 = raw_input('Word number 5: ')
+    #    word6 = raw_input('Word number 6: ')
     
     subreddit_comments_list = []
     for comment in subreddit_comments:
@@ -102,21 +104,43 @@ def sentiment_reddit(comment_amount=200):
     print "total words: " + str(word_count)
     print "Afinn sentiment avg: " + str(sentiment_score)
 
+    stringMyList = ''.join(subreddit_comments_list).encode('utf-8').lower()
+    regex = re.compile('[%s]' % re.escape(string.punctuation))
+    finalList = regex.sub(' ', stringMyList)
+    #del myList, stringMyList
+
+    words = [word1, word2, word3, word4, word5, word6]
+    comments = finalList
+    prof_wordcount = dict((x, 0) for x in words)
+    for w in re.findall(r"\w+", comments):
+        if w in prof_wordcount:
+            prof_wordcount[w] += 1
+    print "Profanity word count: " + str(prof_wordcount)
+    prof_wordcount.keys().insert(0, subreddit)
+
+    # make sure the "semantics" file exists
+    if not os.path.isfile(SENTIMENT_RED):
+        with open(SENTIMENT_RED, "wb") as out_file:
+            fieldnames = ['Subreddit', 'Sentiment Value'] +  prof_wordcount.keys()
+            writer = csv.DictWriter(out_file, fieldnames=fieldnames)
+            writer.writeheader()
+
     with open(SENTIMENT_RED, 'ab') as sm, open(SENTIMENT_RED, 'rt') as f:
         reader = csv.reader(f, delimiter=',')
         writer = csv.writer(sm)
+        w = csv.DictWriter(sm, fieldnames=prof_wordcount.keys())
         for row in reader:
             if subreddit not in row[0]:
                 subredInCsv = False
             else:
                 subredInCsv = True
         if subredInCsv is False:
-            writer.writerow([subreddit, sentiment_score])
+            writer.writerow([subreddit, sentiment_score] + prof_wordcount.values())
         else:
             print "You have already fetched this subreddit."
             print "Try a different."
 
 for x in range(0, 3):
-    sentiment_reddit(comment_amount=200)
+    sentiment_reddit(comment_amount=200)#, word1 = word1, word2 = word2, word3 =word3, word4=word4, word5 = word5, word6 = word6)
 
 plotter(SENTIMENT_RED)
