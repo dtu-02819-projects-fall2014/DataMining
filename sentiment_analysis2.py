@@ -34,6 +34,8 @@ def write_comments(filename, comments):
         writer = csv.writer(output_file)
         writer.writerow(comments)
 
+
+
 def sentiment_reddit(comment_amount=200):
     new_subreddit = raw_input("Please enter new subreddit (videos, nfl, nhl, dogs, christianity, etc.): ")
     subreddit = new_subreddit
@@ -54,7 +56,16 @@ def sentiment_reddit(comment_amount=200):
         subreddit_comments_list.append(comment.body)
         write_comments(subreddit, [comment.body])
     
-
+    subreddit_comments_list = map(lambda foo: foo.replace(".", ""), subreddit_comments_list)
+    subreddit_comments_list = map(lambda foo: foo.replace(",", ""), subreddit_comments_list)
+    subreddit_comments_list = map(lambda foo: foo.replace("!", ""), subreddit_comments_list)
+    subreddit_comments_list = map(lambda foo: foo.replace("?", ""), subreddit_comments_list)
+    subreddit_comments_list = map(lambda foo: foo.replace("*", ""), subreddit_comments_list)
+    subreddit_comments_list = map(lambda foo: foo.replace("'", ""), subreddit_comments_list)
+    subreddit_comments_list = map(lambda foo: foo.replace("/", ""), subreddit_comments_list)
+    subreddit_comments_list = map(lambda foo: foo.replace("(", ""), subreddit_comments_list)
+    subreddit_comments_list = map(lambda foo: foo.replace(")", ""), subreddit_comments_list)
+    
     profanity_list = []
     with open('profanity-list-google.txt') as swearword:
         for someword in swearword:
@@ -68,6 +79,7 @@ def sentiment_reddit(comment_amount=200):
         redcomment = redcomment.encode('utf-8')
         for word in redcomment.lower().split():
             word_count += 1
+            print word
             if word in profanity_list:
             	profanity_count += 1
 
