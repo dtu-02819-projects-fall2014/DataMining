@@ -84,12 +84,12 @@ def sentiment_reddit(comment_amount=200, word1='gay', word2='homo', word3='homos
             if word in profanity_list:
                 profanity_count += 1
 
-    profanity_score = float(sum(profanity_count)/word_count)
+    prof_score = float(profanity_count)/word_count
+
     # Use AFINN-111.txt and make a dict with words and their coresponding sentiment values. 
     afinn = dict(map(lambda (w, s): (w, int(s)), [ 
             ws.strip().split('\t') for ws in open(AFINN_FILE)]))
 
-    
     # Convert the list of comments to a string, get sentiment value for each word 
     # and calculate an estimated sentimen average. 
     afinn_score = 0
@@ -104,6 +104,7 @@ def sentiment_reddit(comment_amount=200, word1='gay', word2='homo', word3='homos
 
     print "profanity count: " + str(profanity_count)
     print "total words: " + str(word_count)
+    print "profscore: " + str(prof_score)
     print "Afinn sentiment avg: " + str(sentiment_score)
 
     # Convert list to string in order to count the frequency of selected words.
@@ -120,10 +121,12 @@ def sentiment_reddit(comment_amount=200, word1='gay', word2='homo', word3='homos
     print "Profanity word count: " + str(prof_wordcount)
     prof_wordcount.keys().insert(0, subreddit)
 
+    prof_score_list = [prof_score]
+
     # Make sure the "SENTIMENT_RED" file exists.
     if not os.path.isfile(SENTIMENT_RED):
         with open(SENTIMENT_RED, "wb") as out_file:
-            fieldnames = ['Subreddit', 'Sentiment Value'] + prof_wordcount.keys()
+            fieldnames = ['Subreddit', 'Sentiment Value'] + prof_wordcount.keys() + ['Profanity Score']
             writer = csv.DictWriter(out_file, fieldnames=fieldnames)
             writer.writeheader()
 
@@ -138,7 +141,7 @@ def sentiment_reddit(comment_amount=200, word1='gay', word2='homo', word3='homos
             else:
                 subredInCsv = True
         if subredInCsv is False:
-            writer.writerow([subreddit, sentiment_score] + prof_wordcount.values())
+            writer.writerow([subreddit, sentiment_score] + prof_wordcount.values() + prof_score_list)
         else:
             print "You have already fetched this subreddit."
             print "Try a different."

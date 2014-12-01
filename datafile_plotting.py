@@ -16,6 +16,10 @@ def plotter(plot_file, chosen_words):
     plt.xticks(rotation='0')
     plt.show()
 
+    df['Profanity Score'].plot(kind='bar')
+    plt.xticks(rotation='0')
+    plt.show()
+
     #plt.boxplot(x=df.values)
     #plt.xticks([1, 2, 3, 4, 5, 6], df.columns)
     #plt.show()
