@@ -36,9 +36,6 @@ def write_comments(filename, comments):
 
 def sentiment_reddit(comment_amount=200, word1 = 'gay', word2 = 'homo', word3 ='homosexual', word4='faggot', word5 = 'fag', word6 = 'queer'):
     words = []
-=======
-def sentiment_reddit(comment_amount=200, word1 = 'in', word2 = 'the', word3 ='ass', word4='hey', word5 = 'lol', word6 = 'nice'):
->>>>>>> FETCH_HEAD
     new_subreddit = raw_input("Please enter new subreddit (videos, nfl, nhl, dogs, christianity, etc.): ")
     subreddit = new_subreddit
     if subreddit == 'exit':
