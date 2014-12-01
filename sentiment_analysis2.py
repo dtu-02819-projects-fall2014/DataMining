@@ -32,7 +32,7 @@ def write_comments(filename, comments):
         writer = csv.writer(output_file)
         writer.writerow(comments)
 
-<<<<<<< HEAD
+
 
 def sentiment_reddit(comment_amount=200, word1 = 'gay', word2 = 'homo', word3 ='homosexual', word4='faggot', word5 = 'fag', word6 = 'queer'):
     words = []
