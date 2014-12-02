@@ -66,17 +66,16 @@ def sentiment_reddit(comment_amount, words_of_interest):
             print "You have already fetched this subreddit."
             print "Try a different."
 
+comment_amount = int(raw_input("Amount of comments from each subreddit (0 to 1000)?"))
+
 words_of_interest = []
 for x in range (0,6):
 	x = raw_input('Enter word of interest (' + str(x + 1) +'/6): ')
 	words_of_interest.append(x)
 
-comment_amount = 200
-# print words_of_interest
-
 subreddit_name_list =[]
 for x in range (0, 3):
-    subreddit_input = raw_input("Enter subreddit: ")
+    subreddit_input = raw_input("Enter subreddit (" + str(x+1) + "/3): ")
 
     if subreddit_input == 'exit':
         exit('You have exited')
@@ -86,17 +85,17 @@ for x in range (0, 3):
             subreddit_name = r.get_subreddit(subreddit_input, fetch=True)
         except:
             print "That is not a valid subreddit. Please try again"
-            new_subreddit = raw_input("Enter subreddit: ")
+            new_subreddit = raw_input("Enter subreddit (" + str(x+1) + "/3): ")
             subreddit_input = new_subreddit
             continue
         break
 
     subreddit_name_list.append(subreddit_input)
 
-
-print subreddit_name_list
+print "\nPlease hang on, this might take a few minutes...\n"
 
 for x in range (0, 3):
+    print "\nCalculating data for " + subreddit_name_list[x] 
     new_subreddit = subreddit_name_list[x]
     subreddit = new_subreddit
     
