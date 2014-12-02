@@ -22,7 +22,7 @@ if not os.path.exists(CSV_FOLDER):
 r = praw.Reddit(user_agent='Sentiment analysis of subreddits by /u/langeniels')
 subredInCsv = True
 
-<<<<<<< HEAD
+
 # def sentiment_reddit(comment_amount=200, word1='gay', word2='homo', word3='love', word4='sex', word5='prayer', word6='meditation'):
 def sentiment_reddit(comment_amount, words_of_interest):
     word1 = words_of_interest[0]
@@ -31,32 +31,6 @@ def sentiment_reddit(comment_amount, words_of_interest):
     word4 = words_of_interest[3]
     word5 = words_of_interest[4]
     word6 = words_of_interest[5]
-=======
-
-def sentiment_reddit(comment_amount=200,
-                     word1='gay', word2='homo', word3='love',
-                     word4='sex', word5='prayer', word6='meditation'):
-
-    new_subreddit = raw_input("Please enter new subreddit\n"
-                              "(videos, nfl, dogs, christianity, etc.).\n"
-                              "Or you can type 'exit' to quit the program: ")
-    subreddit = new_subreddit
-    if subreddit == 'exit':
-        exit('You have exited')
-
-    # Check if input is a valid subreddit.
-    while True:
-        try:
-            subreddit_name = r.get_subreddit(subreddit, fetch=True)
-            subreddit_comments = subreddit_name.get_comments(
-                limit=comment_amount)
-        except:
-            print "That is not a valid subreddit. Please try again"
-            new_subreddit = raw_input("Please enter new subreddit ")
-            subreddit = new_subreddit
-            continue
-        break
->>>>>>> FETCH_HEAD
 
     words = [word1, word2, word3, word4, word5, word6]
     subreddit_comments_list, word_count, sentiment_score, \
@@ -91,6 +65,7 @@ def sentiment_reddit(comment_amount=200,
         else:
             print "You have already fetched this subreddit."
             print "Try a different."
+
 
 words_of_interest = []
 for x in range (0,6):
@@ -128,3 +103,5 @@ for x in range (0, 3):
 
 plotter(REDDIT_SENTIMENT_FILE, words_of_interest)
 # , word1 = word1, word2 = word2, word3 =word3, word4=word4, word5 = word5, word6 = word6)
+
+
