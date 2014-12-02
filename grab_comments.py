@@ -66,6 +66,7 @@ def sentiment_reddit(comment_amount, words_of_interest):
 comment_amount = int(raw_input("Amount of comments from each subreddit"
                                "(0 to 1000)? "))
 
+# Words of interest input
 words_of_interest = []
 for x in range(0, 6):
     x = raw_input('Enter word of interest (' + str(x + 1) + '/6): ')
