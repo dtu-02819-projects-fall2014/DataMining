@@ -77,28 +77,32 @@ comment_amount = 200
 
 subreddit_name_list =[]
 for x in range (0, 3):
-	subreddit_input = raw_input("Enter subreddit: ")
-	subreddit_name_list.append(subreddit_input)
+    subreddit_input = raw_input("Enter subreddit: ")
+
+    if subreddit_input == 'exit':
+        exit('You have exited')
+
+    subreddit_name_list.append(subreddit_input)
+    while True:
+        try:
+            subreddit_name = r.get_subreddit(subreddit_input, fetch=True)
+        except:
+            print "That is not a valid subreddit. Please try again"
+            new_subreddit = raw_input("Please enter new subreddit ")
+            subreddit_input = new_subreddit
+            continue
+        break
+
 
 print subreddit_name_list
 
 for x in range (0, 3):
     new_subreddit = subreddit_name_list[x]
     subreddit = new_subreddit
-    if subreddit == 'exit':
-        exit('You have exited')
+    
+    subreddit_name = r.get_subreddit(subreddit, fetch=True)
+    subreddit_comments = subreddit_name.get_comments(limit=comment_amount)
 
-    # Check if input is a valid subreddit.
-    while True:
-        try:
-            subreddit_name = r.get_subreddit(subreddit, fetch=True)
-            subreddit_comments = subreddit_name.get_comments(limit=comment_amount)
-        except:
-            print "That is not a valid subreddit. Please try again"
-            new_subreddit = raw_input("Please enter new subreddit ")
-            subreddit = new_subreddit
-            continue
-        break
     sentiment_reddit(comment_amount, words_of_interest)
 
 plotter(REDDIT_SENTIMENT_FILE, words_of_interest)
