@@ -66,7 +66,6 @@ def sentiment_reddit(comment_amount, words_of_interest):
             print "You have already fetched this subreddit."
             print "Try a different."
 
-
 words_of_interest = []
 for x in range (0,6):
 	x = raw_input('Enter word of interest (' + str(x + 1) +'/6): ')
@@ -81,17 +80,18 @@ for x in range (0, 3):
 
     if subreddit_input == 'exit':
         exit('You have exited')
-
-    subreddit_name_list.append(subreddit_input)
+    
     while True:
         try:
             subreddit_name = r.get_subreddit(subreddit_input, fetch=True)
         except:
             print "That is not a valid subreddit. Please try again"
-            new_subreddit = raw_input("Please enter new subreddit ")
+            new_subreddit = raw_input("Enter subreddit: ")
             subreddit_input = new_subreddit
             continue
         break
+
+    subreddit_name_list.append(subreddit_input)
 
 
 print subreddit_name_list
