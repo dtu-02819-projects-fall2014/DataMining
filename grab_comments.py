@@ -23,7 +23,6 @@ r = praw.Reddit(user_agent='Sentiment analysis of subreddits by /u/langeniels')
 subredInCsv = True
 
 
-# def sentiment_reddit(comment_amount=200, word1='gay', word2='homo', word3='love', word4='sex', word5='prayer', word6='meditation'):
 def sentiment_reddit(comment_amount, words_of_interest):
     word1 = words_of_interest[0]
     word2 = words_of_interest[1]
@@ -32,7 +31,6 @@ def sentiment_reddit(comment_amount, words_of_interest):
     word5 = words_of_interest[4]
     word6 = words_of_interest[5]
 
-    words = [word1, word2, word3, word4, word5, word6]
     subreddit_comments_list, word_count, sentiment_score, \
         prof_score_list, profanity_count, prof_score, prof_wordcount = \
         reddit_anal(subreddit_comments, word1, word2, word3,
@@ -66,20 +64,20 @@ def sentiment_reddit(comment_amount, words_of_interest):
             print "You have already fetched this subreddit."
             print "Try a different."
 
-comment_amount = int(raw_input("Amount of comments from each subreddit (0 to 1000)?"))
+comment_amount = int(raw_input("Amount of comments from each subreddit"
+                               "(0 to 1000)?"))
 
 words_of_interest = []
-for x in range (0,6):
-	x = raw_input('Enter word of interest (' + str(x + 1) +'/6): ')
-	words_of_interest.append(x)
+for x in range(0, 6):
+    x = raw_input('Enter word of interest (' + str(x + 1) + '/6): ')
+    words_of_interest.append(x)
 
-subreddit_name_list =[]
-for x in range (0, 3):
+subreddit_name_list = []
+for x in range(0, 3):
     subreddit_input = raw_input("Enter subreddit (" + str(x+1) + "/3): ")
 
     if subreddit_input == 'exit':
         exit('You have exited')
-    
     while True:
         try:
             subreddit_name = r.get_subreddit(subreddit_input, fetch=True)
@@ -94,17 +92,13 @@ for x in range (0, 3):
 
 print "\nPlease hang on, this might take a few minutes...\n"
 
-for x in range (0, 3):
-    print "\nCalculating data for " + subreddit_name_list[x] 
+for x in range(0, 3):
+    print "\n Calculating data for " + subreddit_name_list[x]
     new_subreddit = subreddit_name_list[x]
     subreddit = new_subreddit
-    
     subreddit_name = r.get_subreddit(subreddit, fetch=True)
     subreddit_comments = subreddit_name.get_comments(limit=comment_amount)
 
     sentiment_reddit(comment_amount, words_of_interest)
 
 plotter(REDDIT_SENTIMENT_FILE, words_of_interest)
-# , word1 = word1, word2 = word2, word3 =word3, word4=word4, word5 = word5, word6 = word6)
-
-
