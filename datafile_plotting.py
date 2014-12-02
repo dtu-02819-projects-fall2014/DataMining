@@ -5,7 +5,12 @@ import numpy as np
 import csv
 import math
 import Image
+import os
 
+PLOT_FOLDER = 'plot_output_files'
+
+if not os.path.exists(PLOT_FOLDER):
+    os.makedirs(PLOT_FOLDER)
 
 def plotter(plot_file, chosen_words):
     df = pd.read_csv(plot_file, encoding="utf-8",index_col='Subreddit')
@@ -13,8 +18,8 @@ def plotter(plot_file, chosen_words):
     plt.xticks(rotation='0')
     plt.title('Word Frequency')
     plt.ylabel('Percentage')
-    plt.savefig('testplot.png')
-    Image.open('testplot.png').save('testplot.jpg','JPEG')
+    plt.savefig('plot_output_files/testplot.png')
+    Image.open('plot_output_files/testplot.png').save('plot_output_files/testplot.jpg','JPEG')
     plt.show()
 
     df['Sentiment Value'].plot(kind='bar')

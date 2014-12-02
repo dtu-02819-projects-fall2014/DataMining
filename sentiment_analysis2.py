@@ -10,14 +10,20 @@ import string
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-SENTIMENT_RED = "reddit_sentiment.csv"
-AFINN_FILE = 'AFINN-111.txt'
+REDDIT_SENTIMENT_FILE = 'csv_files/reddit_sentiment.csv'
+AFINN_FILE = 'word_lists/AFINN-111.txt'
+PROFANITY_LIST_FILE = 'word_lists/profanity-list-google.txt'
+
+CSV_FOLDER = 'csv_files'
 
 r = praw.Reddit(user_agent='Sentiment analysis of subreddits by /u/langeniels')
 subredInCsv = True
 
-if os.path.isfile(SENTIMENT_RED):
-    os.remove(SENTIMENT_RED)
+if os.path.isfile(REDDIT_SENTIMENT_FILE):
+    os.remove(REDDIT_SENTIMENT_FILE)
+
+if not os.path.exists(CSV_FOLDER):
+    os.makedirs(CSV_FOLDER)
 
 # Write the comments from the given subreddit to a file 
 # and nameit after the name of the subreddit and date.
@@ -26,18 +32,18 @@ def write_comments(filename, comments):
     now = date.today()
     dateToday = "-" + str(now.month) + "-" + str(now.day) + "-" + str(now.year)
 
-    with open(filename + dateToday + '.csv', 'ab') as output_file:
+    with open(CSV_FOLDER + '/' + filename + dateToday + '.csv', 'ab') as output_file:
         writer = csv.writer(output_file)
         writer.writerow(comments)
 
 def sentiment_reddit(comment_amount=200, word1='gay', word2='homo', word3='love', word4='sex', word5='prayer', word6='meditation'):
     words = []
-    new_subreddit = raw_input("Please enter new subreddit (videos, nfl, nhl, dogs, christianity, etc.): ")
+    new_subreddit = raw_input("Please enter new subreddit (videos, nfl, dogs, christianity, etc.): ")
     subreddit = new_subreddit
     if subreddit == 'exit':
         sys.exit('You have exited')
 
-    # Run the function for each of the given subreddit.
+    # Check if input is a valid subreddit.
     while True:
         try:
             subreddit_name = r.get_subreddit(subreddit, fetch=True)
@@ -68,7 +74,7 @@ def sentiment_reddit(comment_amount=200, word1='gay', word2='homo', word3='love'
 
     # Run through the list of profanity and store them in a list.
     profanity_list = []
-    with open('profanity-list-google.txt') as swearword:
+    with open(PROFANITY_LIST_FILE) as swearword:
         for someword in swearword:
             someword = someword.strip()
             profanity_list.append(someword)
@@ -126,15 +132,15 @@ def sentiment_reddit(comment_amount=200, word1='gay', word2='homo', word3='love'
     for key,value in prof_wordcount.items():
         prof_wordcount[key] = (float(value)/word_count)*100
 
-    # Make sure the "SENTIMENT_RED" file exists.
-    if not os.path.isfile(SENTIMENT_RED):
-        with open(SENTIMENT_RED, "wb") as out_file:
+    # Make sure the "REDDIT_SENTIMENT_FILE" file exists.
+    if not os.path.isfile(REDDIT_SENTIMENT_FILE):
+        with open(REDDIT_SENTIMENT_FILE, "wb") as out_file:
             fieldnames = ['Subreddit', 'Sentiment Value'] + prof_wordcount.keys() + ['Profanity Score']
             writer = csv.DictWriter(out_file, fieldnames=fieldnames)
             writer.writeheader()
 
-    # Write all the values to the SENTIMENT_RED file for plotting.
-    with open(SENTIMENT_RED, 'ab') as sm, open(SENTIMENT_RED, 'rt') as f:
+    # Write all the values to the REDDIT_SENTIMENT_FILE file for plotting.
+    with open(REDDIT_SENTIMENT_FILE, 'ab') as sm, open(REDDIT_SENTIMENT_FILE, 'rt') as f:
         reader = csv.reader(f, delimiter=',')
         writer = csv.writer(sm)
         w = csv.DictWriter(sm, fieldnames=prof_wordcount.keys())
@@ -154,4 +160,4 @@ for x in range(0, 3):
     sentiment_reddit(comment_amount=200)
     # , word1 = word1, word2 = word2, word3 =word3, word4=word4, word5 = word5, word6 = word6)
 
-plotter(SENTIMENT_RED, chosen_words=sentiment_reddit())
+plotter(REDDIT_SENTIMENT_FILE, chosen_words=sentiment_reddit())
