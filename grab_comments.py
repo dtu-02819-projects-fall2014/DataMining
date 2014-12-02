@@ -33,8 +33,7 @@ def sentiment_reddit(comment_amount, words_of_interest):
 
     subreddit_comments_list, word_count, sentiment_score, \
         prof_score_list, profanity_count, prof_score, prof_wordcount = \
-        reddit_anal(subreddit_comments, word1, word2, word3,
-                    word4, word5, word6)
+        reddit_anal(subreddit_comments, word1, word2, word3, word4, word5, word6)
 
     # Make sure the correct subreddit name is inserted after the values
     prof_wordcount.keys().insert(0, subreddit)
@@ -65,7 +64,7 @@ def sentiment_reddit(comment_amount, words_of_interest):
             print "Try a different."
 
 comment_amount = int(raw_input("Amount of comments from each subreddit"
-                               "(0 to 1000)?"))
+                               "(0 to 1000)? "))
 
 words_of_interest = []
 for x in range(0, 6):
