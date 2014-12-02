@@ -35,8 +35,8 @@ def reddit_anal(subreddit_com, word1, word2, word3, word4, word5, word6):
                 profanity_list.append(someword)
 
         # Run through the commentlist and count profanity.
-        word_count = 0.0
-        profanity_count = 0.0
+        word_count = 0
+        profanity_count = 0
 
         for redcomment in subreddit_comments_list:
             redcomment = redcomment.encode('utf-8')

@@ -25,24 +25,14 @@ if not os.path.exists(CSV_FOLDER):
 r = praw.Reddit(user_agent='Sentiment analysis of subreddits by /u/langeniels')
 subredInCsv = True
 
-def sentiment_reddit(comment_amount=200, word1='gay', word2='homo', word3='love', word4='sex', word5='prayer', word6='meditation'):
-    new_subreddit = raw_input("Enter new subreddit (videos, nfl, dogs, christianity, etc.).\n"
-                              "Or you can type 'exit' to quit the program: ")
-    subreddit = new_subreddit
-    if subreddit == 'exit':
-        exit('You have exited')
-
-    # Check if input is a valid subreddit.
-    while True:
-        try:
-            subreddit_name = r.get_subreddit(subreddit, fetch=True)
-            subreddit_comments = subreddit_name.get_comments(limit=comment_amount)
-        except:
-            print "That is not a valid subreddit. Please try again"
-            new_subreddit = raw_input("Please enter new subreddit ")
-            subreddit = new_subreddit
-            continue
-        break
+# def sentiment_reddit(comment_amount=200, word1='gay', word2='homo', word3='love', word4='sex', word5='prayer', word6='meditation'):
+def sentiment_reddit(comment_amount, words_of_interest):
+    word1 = words_of_interest[0]
+    word2 = words_of_interest[1]
+    word3 = words_of_interest[2]
+    word4 = words_of_interest[3]
+    word5 = words_of_interest[4]
+    word6 = words_of_interest[5]
 
     words = [word1, word2, word3, word4, word5, word6]
     subreddit_comments_list, word_count, sentiment_score, prof_score_list, profanity_count, prof_score, prof_wordcount = reddit_anal(subreddit_comments, word1, word2, word3, word4, word5, word6)
@@ -71,10 +61,42 @@ def sentiment_reddit(comment_amount=200, word1='gay', word2='homo', word3='love'
         else:
             print "You have already fetched this subreddit."
             print "Try a different."
-    return words
 
-for x in range(0, 3):
-    sentiment_reddit(comment_amount=200)
-    # , word1 = word1, word2 = word2, word3 =word3, word4=word4, word5 = word5, word6 = word6)
+words_of_interest = []
+for x in range (0,6):
+	x = raw_input('Enter word of interest (' + str(x + 1) +'/6): ')
+	words_of_interest.append(x)
 
-plotter(REDDIT_SENTIMENT_FILE, chosen_words=sentiment_reddit())
+comment_amount = 200
+# print words_of_interest
+
+subreddit_name_list =[]
+for x in range (0, 3):
+	subreddit_input = raw_input("Enter subreddit: ")
+	subreddit_name_list.append(subreddit_input)
+
+print subreddit_name_list
+
+for x in range (0, 3):
+    new_subreddit = subreddit_name_list[x]
+    subreddit = new_subreddit
+    if subreddit == 'exit':
+        exit('You have exited')
+
+    # Check if input is a valid subreddit.
+    while True:
+        try:
+            subreddit_name = r.get_subreddit(subreddit, fetch=True)
+            subreddit_comments = subreddit_name.get_comments(limit=comment_amount)
+        except:
+            print "That is not a valid subreddit. Please try again"
+            new_subreddit = raw_input("Please enter new subreddit ")
+            subreddit = new_subreddit
+            continue
+        break
+    sentiment_reddit(comment_amount, words_of_interest)
+
+plotter(REDDIT_SENTIMENT_FILE, words_of_interest)
+# , word1 = word1, word2 = word2, word3 =word3, word4=word4, word5 = word5, word6 = word6)
+
+
