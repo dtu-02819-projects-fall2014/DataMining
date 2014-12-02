@@ -73,17 +73,6 @@ def plotter(plot_file, chosen_words):
     plt.savefig('plot_output_files/profanity_bar.png', bbox_inches="tight")
     plt.show()
 
-    #plt.boxplot(x=df.values)
-    #plt.xticks([1, 2, 3, 4, 5, 6], df.columns)
-    #plt.show()
-
-    #df.boxplot()
-    #plt.show()
-    #area =[]
-    #area.append(math.sqrt(df.values))
-    #plt.scatter(df.index,df[chosen_words])
-    #plt.show()
-
 
 # Example usage:
 
