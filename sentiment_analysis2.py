@@ -41,7 +41,7 @@ def sentiment_reddit(comment_amount=200, word1='gay', word2='homo', word3='love'
     new_subreddit = raw_input("Please enter new subreddit (videos, nfl, dogs, christianity, etc.): ")
     subreddit = new_subreddit
     if subreddit == 'exit':
-        sys.exit('You have exited')
+        exit('You have exited')
 
     # Check if input is a valid subreddit.
     while True:
