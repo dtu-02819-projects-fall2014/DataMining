@@ -116,7 +116,7 @@ while True:
     try:
         comment_amount = int(raw_input("Amount of comments from each subreddit"
                                        "(0 to 1000)? "))
-        if comment_amount in range(0, 1000):
+        if comment_amount in range(0, 1001):
             break
     except ValueError:
         print "Whoops. Wrong input. Try again"
