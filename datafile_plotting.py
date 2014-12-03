@@ -1,3 +1,30 @@
+"""
+This file is part of the Subreddit Comments Analysis bot program.
+
+Copyright 2014 Jeppe de Lange and Niclas Bach Nielsen
+
+It is intended to be used in conjunction with analysis.py and
+grab_comments.py.
+This script will take the data which is outputted from analysis.py and
+grab_comments.py and plot four graphs and saving them to '/plot_output_files/'
+
+License:
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+The Reddit Subreddit Comments Analysis is distributed in the hope
+that it will be useful, but WITHOUT ANY WARRANTY; without even
+the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with the Reddit Subreddit Comments Analysis library.
+If not, see <http://www.gnu.org/licenses/>.
+"""
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
@@ -9,6 +36,18 @@ if not os.path.exists(PLOT_FOLDER):
 
 
 def plotter(plot_file, chosen_words):
+    """
+    Generates four bar plots of an inputted .csv file.
+    Inputs a .csv file and some specified Words generated from
+    grab_comments.py
+
+    Example usage:
+
+    >>> plotter(plot_file = 'reddit_sentiment.csv', chosen_words =
+                [money, cats, dogs, love, hate, kiss])
+
+    The reddit_sentiment.csv file and the chosen words have to correspond.
+    """
     df = pd.read_csv(plot_file, encoding="utf-8", index_col='Subreddit')
     ax = df[chosen_words].plot(kind='barh',
                                stacked=True, alpha=0.7, figsize=(12, 9))

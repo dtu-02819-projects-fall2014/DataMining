@@ -1,3 +1,38 @@
+"""
+This file is part of the Subreddit Comments Analysis bot library.
+
+Copyright 2014 Jeppe de Lange and Niclas Bach Nielsen
+
+This file is the 'core' file of the library and it is most likely
+this file that would be run to gain the desired result.
+
+The script is intended to run from a terminal (or the like) to make use of the
+user input that it will ask for.
+
+The reddit_sentiment.csv file will output a header containing
+"Subreddit", "Sentiment Value" and some specified words (from user input).
+The script will also output the corresponding subreddits, sentiment values
+and the specified words values in the correct columns.
+
+License:
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+The Reddit Subreddit Comments Analysis is distributed in the hope
+that it will be useful, but WITHOUT ANY WARRANTY; without even
+the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with the Reddit Subreddit Comments Analysis library.
+If not, see <http://www.gnu.org/licenses/>.
+"""
+
+
 import praw
 import csv
 import os
@@ -24,6 +59,19 @@ subredInCsv = True
 
 
 def sentiment_reddit(comment_amount, words_of_interest):
+    """
+    Generates .csv file containing specified subreddit comments.
+    Four bar plots wil be generated of
+    the fetched comments (from datafile_plotting.py).
+    The function will run it self three times in order to fetch all comments
+    from the three specified subreddits.
+
+    Example usage:
+
+    >>> sentiment_reddit(comment_amount = 500,
+                         words_of_interest = [money, cats, dogs,
+                                              love, hate, kiss])
+    """
     word1 = words_of_interest[0]
     word2 = words_of_interest[1]
     word3 = words_of_interest[2]
@@ -66,7 +114,8 @@ def sentiment_reddit(comment_amount, words_of_interest):
             print "Try a different."
 while True:
     try:
-        comment_amount = int(raw_input("Amount of comments from each subreddit (0 to 1000)? "))
+        comment_amount = int(raw_input("Amount of comments from each subreddit"
+                                       "(0 to 1000)? "))
         if comment_amount in range(0, 1000):
             break
     except ValueError:
