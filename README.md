@@ -11,8 +11,7 @@ This program has several functions you can use to interact with reddit.com. It a
 		from grab_comments import sentiment_reddit
 
 		sentiment_reddit(comment_amount = 500,
-                     words_of_interest = [money, cats, dogs,
-                                          love, hate, kiss])
+				 		 words_of_interest = [money, cats, dogs, love, hate, kiss])
 
 By default, the program asks for a user input to determine the amount of comments to fetch and the words. It also uses user input to determine what subreddits it should search in.
 
