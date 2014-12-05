@@ -32,7 +32,6 @@ along with the Reddit Subreddit Comments Analysis library.
 If not, see <http://www.gnu.org/licenses/>.
 """
 
-
 import praw
 import csv
 import os
