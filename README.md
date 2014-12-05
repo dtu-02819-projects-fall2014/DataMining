@@ -22,8 +22,7 @@ This script will output a .csv file called ‘reddit_sentiment.csv’ containing
 
 		from analysis import reddit_anal
 
-		reddit_anal(subreddit_com = 'comments.csv',
-                'money', 'cats', 'dogs', 'love', 'hate', 'kiss')
+		reddit_anal('comments.csv', 'money', 'cats', 'dogs', 'love', 'hate', 'kiss')
 
 the analysis.py file will input the subreddit comments (working together with grab_comments.py) and analyse the comments. The output will then be the average subreddits sentiment values, the percentage of swearing and the occurrences of the specified words.
 
@@ -32,6 +31,6 @@ the analysis.py file will input the subreddit comments (working together with gr
 		from datafile_plotting import plotter
 
 		plotter(plot_file = 'reddit_sentiment.csv', chosen_words =
-            [money, cats, dogs, love, hate, kiss])
+            	[money, cats, dogs, love, hate, kiss])
 
 This function will graph the outputted reddit_sentiment.csv file with four bar plots.
